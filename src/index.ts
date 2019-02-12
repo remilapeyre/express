@@ -8,6 +8,19 @@ const sequelize = new Sequelize('postgres://user:pass@db:5432/db');
 // 'post' will be the name of the table in the model
 // you can get the full documentation of model definition fields at
 // http://docs.sequelizejs.com/manual/tutorial/models-definition.html#data-types
+// The following fields will be used implictly by Sequelize:
+//   - id
+//   - createdAt
+//   - updatedAt
+const User = sequelize.define('user', {
+    username: {
+        type: Sequelize.STRING
+    },
+    email: {
+        type: Sequelize.STRING
+    }
+});
+
 const Post = sequelize.define('post', {
     title: {
       type: Sequelize.STRING
@@ -17,7 +30,27 @@ const Post = sequelize.define('post', {
     }
 });
 
-app.get('/v1/posts', function(request, response) {
+const Tag = sequelize.define('tag', {
+    "name": {
+        type: Sequelize.STRING
+    }
+});
+
+const ImagePost = sequelize.define('image', {
+    "url": {
+        type: Sequelize.STRING
+    },
+    "description": {
+        type: Sequelize.STRING
+    }
+});
+
+const Commentaire = sequelize.define('comment', {
+    "content": {
+        type: Sequelize.STRING
+    }
+});
+
 
     Post.findAll().then(function(posts) {
         let result = [];
