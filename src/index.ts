@@ -76,11 +76,11 @@ function get(model, attributes) {
     }
 }
 
-app.get('/v1/users', get(User, ["username", "email"]));
-app.get('/v1/posts', get(Post, ["title", "content"]));
-app.get('/v1/tags', get(Tag, ["name"]));
-app.get('/v1/images', get(ImagePost, ["url", "description"]));
-app.get('/v1/comments', get(Commentaire, ["content"]));
+app.get('/v1/users', get(User, ["id", "username", "email"]));
+app.get('/v1/posts', get(Post, ["id", "title", "content"]));
+app.get('/v1/tags', get(Tag, ["id", "name"]));
+app.get('/v1/images', get(ImagePost, ["id", "url", "description"]));
+app.get('/v1/comments', get(Commentaire, ["id", "content"]));
 
 app.listen(port, function() {
     console.log(`Your app is listening on ${port}!`);
