@@ -145,6 +145,36 @@ app.post('/v1/images/:id', create(ImagePost, ["id", "url", "description"]));
 app.post('/v1/comments/:id', create(Commentaire, ["id", "content"]));
 
 
+
+// To delete something, we don't need to know its attributes
+function destroy(model) {
+    return function(request, response) {
+        // We first get the object
+        model.findById(request.params.id).then(function(obj) {
+
+            if (obj != null) {
+                // If we found an object, we destroy it
+                // http://docs.sequelizejs.com/manual/tutorial/instances.html#destroying-deleting-persistent-instances
+                obj.destroy().then(function() {
+
+                    // Since the object is destroyed, we don't need to return
+                    // anything
+                    response.json({})
+                })
+            } else {
+                response.status(404).json({"error": "Not found"})
+            }
+        })
+    }
+}
+
+app.delete('/v1/users/:id', destroy(User));
+app.delete('/v1/posts/:id', destroy(Post));
+app.delete('/v1/tags/:id', destroy(Tag));
+app.delete('/v1/images/:id', destroy(ImagePost));
+app.delete('/v1/comments/:id', destroy(Commentaire));
+
+
 app.listen(port, function() {
     console.log(`Your app is listening on ${port}!`);
 });
